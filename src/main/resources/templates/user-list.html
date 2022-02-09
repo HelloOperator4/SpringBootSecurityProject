@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<h1><a href="/users">Users</a></h1>
+<hr>
+<h4>Список все пользователей</h4>
+
+<form action="/users" method="get">
+    Поиск по имени пользователя: <input type="text" name="username"> <input type="submit" value="Search">
+</form>
+
+<div th:switch="${users}">
+    <h2 th:case="null"> No users found</h2>
+    <div th:case="*">
+        <h2>Users</h2>
+        <table border="1" cellpadding="10">
+            <thread>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Email</th>
+                    <th colspan="2">Operations</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td><a th:text="${user.username}" th:href="@{/user-info/{id}(id=${user.id})} "></a></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.email}"></td>
+                <td><a th:href="@{user-update/{id}(id=${user.id})}">Edit</a></td>
+                <td><a th:href="@{user-delete/{id}(id=${user.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/user-create">Create User</a></p>
+</div>
+</body>
+</html>

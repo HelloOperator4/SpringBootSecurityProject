@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+</head>
+<body>
+<h1>User Info</h1>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Email</th>
+        <th colspan="2">Operations</th>
+    </tr>
+
+    <tr>
+        <td th:text="${user.id}"></td>
+        <td><a th:text="${user.username}"></a></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.email}"></td>
+        <td><a th:href="@{user-update/{id}(id=${user.id})}">Edit</a></td>
+        <td><a th:href="@{user-delete/{id}(id=${user.id})}">Delete</a></td>
+    </tr>
+</table>
+<br>
+<h4><a href="/users">Список всех пользователей</a></h4>
+</body>
+</html>
