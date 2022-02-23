@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ru.mangadash.springbootsecurityproject.model.User;
 import ru.mangadash.springbootsecurityproject.service.UserService;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,8 +31,10 @@ public class UserController {
     }
 
     @PostMapping("/user-create")
-    public String createUser(User user) {
-        userService.saveUser(user);
+    public String createUser(@RequestParam("file1") MultipartFile file1,
+                             @RequestParam("file2") MultipartFile file2,
+                             @RequestParam("file3") MultipartFile file3, User user) throws IOException {
+        userService.saveUser(user, file1, file2, file3);
         return "redirect:/users";
     }
 
@@ -47,14 +52,18 @@ public class UserController {
     }
 
     @PostMapping("/user-update")
-    public String updateUser(User user) {
-        userService.saveUser(user);
+    public String updateUser(@RequestParam("file1") MultipartFile file1,
+                             @RequestParam("file2") MultipartFile file2,
+                             @RequestParam("file3") MultipartFile file3, User user) throws IOException {
+        userService.saveUser(user, file1, file2, file3);
         return "redirect:/users";
     }
 
     @GetMapping("/user-info/{id}")
     public String userInfo(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("images", user.getImages());
         return "user-info";
     }
 }

@@ -7,6 +7,10 @@
 <body>
 <h1>User Info</h1>
 
+<div th:each="image : ${images}">
+    <img th:src="@{/images/image}" height="60px" alt="photo">
+</div>
+
 <table border="1" cellpadding="10">
     <tr>
         <th>Id</th>

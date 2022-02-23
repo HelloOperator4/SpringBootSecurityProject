@@ -2,10 +2,14 @@ package ru.mangadash.springbootsecurityproject.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import java.util.List;
+
 
 @Data
 @Entity
@@ -25,4 +29,20 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Image> images = new ArrayList<>();
+
+    private Long previewImageId;
+    private LocalDateTime dateOfCreated;
+
+    @PrePersist
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
+    }
+
+    public void addImageToUser(Image image) {
+        image.setUser(this);
+        images.add(image);
+    }
 }

@@ -6,12 +6,13 @@
 </head>
 <body>
 <h1><a href="/users">Users</a></h1>
-<hr>
-<h4>Список все пользователей</h4>
 
 <form action="/users" method="get">
     Поиск по имени пользователя: <input type="text" name="username"> <input type="submit" value="Search">
 </form>
+
+<hr>
+<h4>Список все пользователей</h4>
 
 <div th:switch="${users}">
     <h2 th:case="null"> No users found</h2>
